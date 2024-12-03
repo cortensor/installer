@@ -23,8 +23,6 @@ echo "   - $CORTENSOR_USER added to sudo group"
 
 # Add the new user to the docker group to allow Docker command execution
 sudo usermod -aG docker $CORTENSOR_USER
-# sudo chown root:docker /var/run/docker.sock
-newgrp docker
 echo "   - $CORTENSOR_USER added to docker group"
 
 echo "3. Deploying the Cortensor daemon executable"
