@@ -42,8 +42,8 @@ echo "   - Directory /usr/local/bin/llm-files created and ownership assigned to 
 echo "5. Configuring Cortensor systemd service"
 
 # Copy the Cortensor systemd service file to the systemd system directory
-sudo cp dist/cortensord.service /etc/systemd/system
-echo "   - cortensord.service file copied to /etc/systemd/system"
+sudo cp dist/cortensor.service /etc/systemd/system
+echo "   - cortensor.service file copied to /etc/systemd/system"
 
 echo "6. Creating configuration directory for Cortensor"
 
