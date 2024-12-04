@@ -1,0 +1,36 @@
+[Unit]
+Description=Cortensor Daemon
+Documentation=https://docs.cortensor.network
+After=network.target
+
+[Service]
+# To run on well-known ports below 1024, you might need capabilities
+# AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+# Set a custom path for Cortensor configuration and data (if needed)
+# Environment=CORTENSOR_PATH=/custom/cortensor/path
+
+# Specify a higher limit for open files/connections if necessary
+# LimitNOFILE=1000000
+
+# Don't use swap
+MemorySwapMax=0
+
+# Don't timeout on startup, particularly important if the daemon has to load large data sets or configurations
+TimeoutStartSec=infinity
+
+Type=simple
+User=deploy
+Group=deploy
+StateDirectory=cortensor
+WorkingDirectory=/home/deploy/.cortensor
+Environment=CORTENSOR_PATH="/home/deploy/.cortensor"
+EnvironmentFile=/home/deploy/.cortensor/.env
+StandardOutput=append:/var/log/cortensord.log
+StandardError=append:/var/log/cortensord.log
+ExecStart=/usr/local/bin/cortensord .env minerv1
+Restart=on-failure
+KillSignal=SIGINT
+
+[Install]
+WantedBy=default.target
