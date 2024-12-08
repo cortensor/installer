@@ -70,8 +70,8 @@ echo "9. Enabling Cortensor daemon service"
 
 # Reload systemd to read new service files and enable Cortensor to start at boot
 sudo systemctl daemon-reload
-sudo systemctl enable cortensord
-echo "   - Systemd reloaded and cortensord service enabled to start at boot"
+sudo systemctl enable cortensor
+echo "   - Systemd reloaded and cortensor service enabled to start at boot"
 
 echo "========================================="
 echo "Cortensor installation process completed successfully!"
