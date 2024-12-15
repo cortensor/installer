@@ -1,0 +1,11 @@
+# /etc/systemd/system/cortensord-restart.timer
+[Unit]
+Description=Periodic Restart of Cortensor Daemon
+
+[Timer]
+OnCalendar=*-*-* 04:00:00  # Restart at 4 AM daily
+# Or use OnUnitActiveSec=24h for every 24 hours from last start
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
