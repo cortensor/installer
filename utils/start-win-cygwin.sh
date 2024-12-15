@@ -9,6 +9,7 @@ cd "$DIR"
 # Export the Cortensor environment paths
 export PATH=$HOME/.cortensor/bin:$HOME/.cortensor/llm-files:$PATH
 
+cd $HOME/.cortensor
 echo "Starting Cortensor daemon..."
 
 # Start the Cortensor daemon
