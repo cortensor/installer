@@ -36,7 +36,9 @@ echo "4. Creating Cortensor startup script"
 
 # Create a startup script for manually starting Cortensor
 cp utils/start-win-cygwin.sh ${CORTENSOR_DIR}/start-cortensor.sh
-chmod +x $START_SCRIPT
+cp utils/stop-win-cygwin.sh ${CORTENSOR_DIR}/stop-cortensor.sh
+chmod +x ${CORTENSOR_DIR}/start-cortensor.sh
+chmod +x ${CORTENSOR_DIR}/stop-cortensor.sh
 echo "   - Start script copied at ~/.cortensor/start-cortensor.sh"
 
 echo "==============================================================="
