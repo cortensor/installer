@@ -1,0 +1,7 @@
+# /etc/systemd/system/cortensord-restart.service
+[Unit]
+Description=Restart Cortensor Daemon
+ 
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl restart cortensord.service
