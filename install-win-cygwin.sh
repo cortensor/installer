@@ -40,6 +40,7 @@ cp utils/stop-win-cygwin.sh ${CORTENSOR_DIR}/stop-cortensor.sh
 chmod +x ${CORTENSOR_DIR}/start-cortensor.sh
 chmod +x ${CORTENSOR_DIR}/stop-cortensor.sh
 echo "   - Start script copied at ~/.cortensor/start-cortensor.sh"
+echo "   - Stop script copied at ~/.cortensor/stop-cortensor.sh"
 
 echo "==============================================================="
 echo "Cortensor installation process for Cygwin completed successfully!"
