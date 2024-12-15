@@ -37,7 +37,7 @@ fi
 
 # Execute the Cortensor tool to generate a new key
 echo "Generating a new key using Cortensor tool..."
-if cortensord.exe ~/.cortensor/.env tool gen_keys; then
+if cortensord.exe ~/.cortensor/.env tool gen_key; then
     echo "Key generated successfully."
 else
     echo "Failed to generate key. Please check the configuration or environment setup."
