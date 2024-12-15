@@ -36,6 +36,7 @@ echo "   - IPFS package extracted successfully"
 
 echo "3. Installing IPFS"
 # Run the installation script
+mkdir -p ~/.cortensor/bin
 cp -f ./kubo/ipfs.exe ~/.cortensor/bin/
 if [[ $? -ne 0 ]]; then
     echo "   - Error: Failed to install IPFS"
