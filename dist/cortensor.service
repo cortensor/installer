@@ -11,7 +11,7 @@ After=network.target
 # Environment=CORTENSOR_PATH=/custom/cortensor/path
 
 # Specify a higher limit for open files/connections if necessary
-# LimitNOFILE=1000000
+LimitNOFILE=1000000
 
 # Don't use swap
 MemorySwapMax=0
