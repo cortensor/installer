@@ -11,7 +11,7 @@ cd $DIR
 echo "Starting IPFS installation process..."
 echo "======================================="
 
-echo "1. Downloading IPFS package"
+echo "1. Downloading IPFS package - Darwin ARM64"
 # Download the IPFS package
 IPFS_VERSION="v0.29.0"
 IPFS_PACKAGE="kubo_${IPFS_VERSION}_darwin-arm64.tar.gz"
