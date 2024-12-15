@@ -19,7 +19,7 @@ echo "   - Directories ~/.cortensor/bin and ~/.cortensor/llm-files created"
 echo "2. Deploying the Cortensor daemon executable"
 
 # Copy the Cortensor daemon executable to the bin directory
-cp dist/cortensord ${CORTENSOR_DIR}/bin
+cp dist/cortensord.exe ${CORTENSOR_DIR}/bin
 chmod +x ${CORTENSOR_DIR}/bin/cortensord.exe
 echo "   - Cortensor daemon copied to ~/.cortensor/bin and made executable"
 
