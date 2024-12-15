@@ -35,15 +35,9 @@ echo "   - Example environment file copied to ~/.cortensor/.env"
 echo "4. Creating Cortensor startup script"
 
 # Create a startup script for manually starting Cortensor
-START_SCRIPT="${CORTENSOR_DIR}/start-cortensor.sh"
-cat <<EOL > $START_SCRIPT
-#!/bin/bash
-export PATH=\$HOME/.cortensor/bin:\$HOME/.cortensor/llm-files:\$PATH
-cortensord.exe \$HOME/.cortensor/.env minerv1
-EOL
-
+cp utils/start-win-cygwin.sh ${CORTENSOR_DIR}/start-cortensor.sh
 chmod +x $START_SCRIPT
-echo "   - Start script created at ~/.cortensor/start-cortensor.sh"
+echo "   - Start script copied at ~/.cortensor/start-cortensor.sh"
 
 echo "==============================================================="
 echo "Cortensor installation process for Cygwin completed successfully!"

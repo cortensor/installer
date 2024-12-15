@@ -6,6 +6,7 @@
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DIR"
 
+cd $HOME/.cortensor
 echo "Stopping Cortensor daemon..."
 
 # Find the process ID (PID) of cortensord and terminate it
