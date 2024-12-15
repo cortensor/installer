@@ -27,7 +27,7 @@ echo "   - IPFS package downloaded successfully"
 
 echo "2. Extracting IPFS package"
 # Extract the package
-tar xzfv $IPFS_PACKAGE
+tar -xf $IPFS_PACKAGE
 if [[ $? -ne 0 ]]; then
     echo "   - Error: Failed to extract $IPFS_PACKAGE"
     exit 1
@@ -36,7 +36,7 @@ echo "   - IPFS package extracted successfully"
 
 echo "3. Installing IPFS"
 # Run the installation script
-sudo ./kubo/install.sh
+sudo cp -f ./kubo/ipfs.exe ~/.cortensor/bin/
 if [[ $? -ne 0 ]]; then
     echo "   - Error: Failed to install IPFS"
     exit 1
