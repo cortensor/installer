@@ -13,7 +13,7 @@ cd $HOME/.cortensor
 echo "Starting Cortensor daemon..."
 
 # Start the Cortensor daemon
-if cortensord.exe $HOME/.cortensor/.env minerv1; then
+if cortensord.exe .env minerv1; then
     echo "Cortensord started successfully."
 else
     echo "Failed to start Cortensord. Please check the logs or environment setup for more details."
