@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script installs IPFS.
+# This script installs IPFS for Windows (Cygwin environment).
 # https://github.com/ipfs/kubo/releases/download/v0.29.0/kubo_v0.29.0_linux-arm64.tar.gz
 # https://github.com/ipfs/kubo/releases/download/v0.29.0/kubo_v0.29.0_darwin-amd64.tar.gz
 # https://github.com/ipfs/kubo/releases/download/v0.29.0/kubo_v0.29.0_windows-amd64.zip
@@ -25,7 +25,21 @@ if [[ $? -ne 0 ]]; then
 fi
 echo "   - IPFS package downloaded successfully"
 
-echo "2. Extracting IPFS package"
+echo "2. Checking for unzip tool"
+# Check if unzip is installed; install if not
+if ! command -v unzip &> /dev/null; then
+    echo "   - unzip not found, installing unzip..."
+    apt-get update && apt-get install unzip -y
+    if [[ $? -ne 0 ]]; then
+        echo "   - Error: Failed to install unzip"
+        exit 1
+    fi
+    echo "   - unzip installed successfully"
+else
+    echo "   - unzip is already installed"
+fi
+
+echo "3. Extracting IPFS package"
 # Extract the package
 unzip $IPFS_PACKAGE
 if [[ $? -ne 0 ]]; then
@@ -34,7 +48,7 @@ if [[ $? -ne 0 ]]; then
 fi
 echo "   - IPFS package extracted successfully"
 
-echo "3. Installing IPFS"
+echo "4. Installing IPFS"
 # Run the installation script
 mkdir -p ~/.cortensor/bin
 cp -f ./kubo/ipfs.exe ~/.cortensor/bin/
