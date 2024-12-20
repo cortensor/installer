@@ -18,8 +18,8 @@ IPFS_PACKAGE="kubo_${IPFS_VERSION}_darwin-arm64.tar.gz"
 IPFS_URL="https://github.com/ipfs/kubo/releases/download/${IPFS_VERSION}/${IPFS_PACKAGE}"
 
 curl -fsSL $IPFS_URL -o $IPFS_PACKAGE
-if [[ $? -ne 0 ]]; then
-    echo "   - Error: Failed to download IPFS package from $IPFS_URL"
+if [[ $? -ne 0 || ! -f $IPFS_PACKAGE ]]; then
+    echo "   - Error: Failed to download or find the IPFS package at $IPFS_URL"
     exit 1
 fi
 echo "   - IPFS package downloaded successfully"
