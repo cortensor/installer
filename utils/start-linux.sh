@@ -11,14 +11,14 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo "Starting Cortensor daemon..."
 
 # Check for existing Cortensor or APE processes
-echo "Checking for running Cortensor and related processes..."
+echo "Checking for running Cortensor and APE processes..."
 
 if pgrep -f "cortensord" > /dev/null || pgrep -f "\.ape-1\.10" > /dev/null; then
-    echo "Detected running Cortensor or related processes."
+    echo "Detected running Cortensor or APE processes."
     echo "Please stop them using the 'stop-cortensor.sh' script before starting a new instance."
     exit 1
 else
-    echo "No running Cortensor or related processes found."
+    echo "No running Cortensor or APE processes found."
 fi
 
 # Create logs directory if it doesn't exist
