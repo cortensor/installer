@@ -32,8 +32,11 @@ echo "3. Deploying the Cortensor daemon executable"
 
 # Copy the Cortensor daemon executable to the user's bin directory
 sudo -u ${CORTENSOR_USER} mkdir -p ${CORTENSOR_BIN}
-sudo cp dist/cortensord ${CORTENSOR_BIN}
-sudo chmod +x ${CORTENSOR_BIN}/cortensord
+#sudo cp dist/cortensord ${CORTENSOR_BIN}
+#sudo chmod +x ${CORTENSOR_BIN}/cortensord
+sudo cp dist/cortensord /usr/local/bin/cortensord
+sudo chmod +x /usr/local/bin/cortensord
+sudo ln -sfn /usr/local/bin/cortensord ${CORTENSOR_BIN}/cortensord
 echo "   - Cortensor daemon copied to ${CORTENSOR_BIN} and made executable"
 
 echo "4. Setting up directories and files for LLM integration"

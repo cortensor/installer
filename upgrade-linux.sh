@@ -44,7 +44,11 @@ fi
 
 # Copy the new binary to the target location
 echo "4. Upgrading Cortensor binary..."
-sudo cp -f "$DIST_BINARY" "$BINARY_PATH"
+#sudo cp -f "$DIST_BINARY" "$BINARY_PATH"
+#sudo chmod +x "$BINARY_PATH"
+sudo cp -f "$DIST_BINARY" /usr/local/bin/cortensord
+sudo chmod +x /usr/local/bin/cortensord
+sudo ln -sfn /usr/local/bin/cortensord ${CORTENSOR_BIN}/cortensord
 if [ $? -eq 0 ]; then
     echo "   - Cortensor binary upgraded successfully."
     sudo chmod +x "$BINARY_PATH"
