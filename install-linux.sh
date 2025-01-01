@@ -32,8 +32,6 @@ echo "3. Deploying the Cortensor daemon executable"
 
 # Copy the Cortensor daemon executable to the user's bin directory
 sudo -u ${CORTENSOR_USER} mkdir -p ${CORTENSOR_BIN}
-#sudo cp dist/cortensord ${CORTENSOR_BIN}
-#sudo chmod +x ${CORTENSOR_BIN}/cortensord
 sudo cp dist/cortensord /usr/local/bin/cortensord
 sudo chmod +x /usr/local/bin/cortensord
 sudo ln -sfn /usr/local/bin/cortensord ${CORTENSOR_BIN}/cortensord
@@ -95,10 +93,16 @@ echo "   - Systemd reloaded and cortensor service enabled to start at boot"
 echo "========================================="
 echo "Cortensor installation completed successfully!"
 echo ""
-echo "Usage:"
-echo "  - To start Cortensor:  ${CORTENSOR_BIN}/start-cortensor.sh"
-echo "  - To stop Cortensor:   ${CORTENSOR_BIN}/stop-cortensor.sh"
-echo "  - Logs are available in: ${CORTENSOR_LOGS}/"
+echo "Recommended Usage:"
+echo "  - To start Cortensor:  sudo systemctl start cortensor"
+echo "  - To stop Cortensor:   sudo systemctl stop cortensor"
 echo ""
-echo "Note: You may need to restart your terminal or update the PATH variable to include:"
+echo "Manual Usage (not recommended):"
+echo "  - To start Cortensor manually:  ${CORTENSOR_BIN}/start-cortensor.sh"
+echo "  - To stop Cortensor manually:   ${CORTENSOR_BIN}/stop-cortensor.sh"
+echo ""
+echo "Logs are available in: ${CORTENSOR_LOGS}/"
+echo ""
+echo "Note: Using systemctl is the recommended approach for managing the Cortensor service."
+echo "      You may need to restart your terminal or update the PATH variable to include:"
 echo "      ${CORTENSOR_BIN}"
