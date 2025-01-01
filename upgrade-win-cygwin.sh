@@ -25,8 +25,21 @@ fi
 
 # Kill any remaining cortensord and ipfs processes
 echo "2. Killing any running cortensord and ipfs processes..."
-pkill -f cortensord.exe && echo "   - Killed cortensord processes." || echo "   - No cortensord processes running."
-pkill -f ipfs && echo "   - Killed ipfs processes." || echo "   - No ipfs processes running."
+CORTENSORD_PID=$(ps -W | grep cortensord.exe | grep -v grep | awk '{print $1}')
+if [ -n "$CORTENSORD_PID" ]; then
+    echo "   - Found Cortensor process with PID: $CORTENSORD_PID"
+    kill -9 "$CORTENSORD_PID" && echo "   - Killed cortensord process." || echo "   - Failed to kill cortensord process."
+else
+    echo "   - No Cortensor process running."
+fi
+
+IPFS_PID=$(ps -W | grep ipfs | grep -v grep | awk '{print $1}')
+if [ -n "$IPFS_PID" ]; then
+    echo "   - Found IPFS process with PID: $IPFS_PID"
+    kill -9 "$IPFS_PID" && echo "   - Killed IPFS process." || echo "   - Failed to kill IPFS process."
+else
+    echo "   - No IPFS process running."
+fi
 
 # Back up the existing binary
 if [ -f "$BINARY_PATH" ]; then
@@ -61,7 +74,7 @@ if [ -f "$ENV_PATH" ]; then
     echo "Do you want to:"
     echo "1) Use the existing .env file"
     echo "2) Back up the existing .env file and copy a new one"
-    read -p "Enter your choice (1, 2, or 3): " choice
+    read -p "Enter your choice (1 or 2): " choice
     case "$choice" in
         1)
             echo "   - Keeping the existing .env file."
