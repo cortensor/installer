@@ -35,7 +35,8 @@ echo "   - IPFS package extracted successfully"
 
 echo "3. Installing IPFS"
 # Run the installation script
-sudo ./kubo/install.sh
+cd ./kubo
+sudo ./install.sh
 if [[ $? -ne 0 ]]; then
     echo "   - Error: Failed to install IPFS"
     exit 1
