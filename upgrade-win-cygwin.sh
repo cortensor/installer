@@ -61,7 +61,6 @@ if [ -f "$ENV_PATH" ]; then
     echo "Do you want to:"
     echo "1) Use the existing .env file"
     echo "2) Back up the existing .env file and copy a new one"
-    echo "3) Overwrite the existing .env file with a new one (no backup)"
     read -p "Enter your choice (1, 2, or 3): " choice
     case "$choice" in
         1)
@@ -73,10 +72,6 @@ if [ -f "$ENV_PATH" ]; then
             echo "   - Existing .env file backed up to $ENV_BACKUP_PATH."
             cp -f "$DIST_ENV" "$ENV_PATH"
             echo "   - New .env file copied to $ENV_PATH."
-            ;;
-        3)
-            cp -f "$DIST_ENV" "$ENV_PATH"
-            echo "   - Existing .env file overwritten with a new one."
             ;;
         *)
             echo "Invalid choice. Aborting upgrade process."
