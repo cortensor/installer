@@ -6,6 +6,9 @@ cd $DIR
 
 # Define the user under which the Cortensor services will run
 CORTENSOR_USER=deploy
+CORTENSOR_HOME="/home/${CORTENSOR_USER}/.cortensor"
+CORTENSOR_BIN="${CORTENSOR_HOME}/bin"
+CORTENSOR_LOGS="${CORTENSOR_HOME}/logs"
 
 echo "Starting Cortensor installation process..."
 echo "========================================="
@@ -27,46 +30,60 @@ echo "   - $CORTENSOR_USER added to docker group"
 
 echo "3. Deploying the Cortensor daemon executable"
 
-# Copy the Cortensor daemon executable to a system-wide location
-sudo cp dist/cortensord /usr/local/bin
+# Copy the Cortensor daemon executable to the user's bin directory
+sudo -u ${CORTENSOR_USER} mkdir -p ${CORTENSOR_BIN}
+sudo cp dist/cortensord /usr/local/bin/cortensord
 sudo chmod +x /usr/local/bin/cortensord
-echo "   - Cortensor daemon copied to /usr/local/bin and made executable"
+sudo ln -sfn /usr/local/bin/cortensord ${CORTENSOR_BIN}/cortensord
+echo "   - Cortensor daemon copied to ${CORTENSOR_BIN} and made executable"
 
 echo "4. Setting up directories and files for LLM integration"
 
 # Create a directory for LLM files, if needed
-sudo mkdir -p /usr/local/bin/llm-files
-sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} /usr/local/bin/llm-files
-echo "   - Directory /usr/local/bin/llm-files created and ownership assigned to $CORTENSOR_USER"
+sudo mkdir -p ${CORTENSOR_HOME}/llm-files
+sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} ${CORTENSOR_HOME}/llm-files
+echo "   - Directory ${CORTENSOR_HOME}/llm-files created and ownership assigned to $CORTENSOR_USER"
 
-echo "5. Configuring Cortensor systemd service"
+echo "5. Copying start and stop scripts"
+
+# Copy the start and stop scripts to the user's Cortensor bin directory
+sudo cp utils/start-linux.sh ${CORTENSOR_BIN}/start-cortensor.sh
+sudo cp utils/stop-linux.sh ${CORTENSOR_BIN}/stop-cortensor.sh
+sudo chmod +x ${CORTENSOR_BIN}/start-cortensor.sh
+sudo chmod +x ${CORTENSOR_BIN}/stop-cortensor.sh
+sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} ${CORTENSOR_BIN}/start-cortensor.sh
+sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} ${CORTENSOR_BIN}/stop-cortensor.sh
+echo "   - Start and stop scripts copied to ${CORTENSOR_BIN} and made executable"
+
+echo "6. Configuring Cortensor systemd service"
 
 # Copy the Cortensor systemd service file to the systemd system directory
 sudo cp dist/cortensor.service /etc/systemd/system
 echo "   - cortensor.service file copied to /etc/systemd/system"
 
-echo "6. Creating configuration directory for Cortensor"
+echo "7. Creating configuration directory for Cortensor"
 
 # Create the configuration directory for Cortensor under the user's home directory
-sudo -u ${CORTENSOR_USER} mkdir -p /home/${CORTENSOR_USER}/.cortensor
-echo "   - Configuration directory /home/${CORTENSOR_USER}/.cortensor created"
+sudo -u ${CORTENSOR_USER} mkdir -p ${CORTENSOR_HOME}
+echo "   - Configuration directory ${CORTENSOR_HOME} created"
 
-echo "7. Copying environment configuration file"
+echo "8. Copying environment configuration file"
 
 # Copy the example environment file to the configuration directory
-sudo -u ${CORTENSOR_USER} cp dist/.env-example /home/${CORTENSOR_USER}/.cortensor/.env
-echo "   - Example environment file copied to /home/${CORTENSOR_USER}/.cortensor/.env"
+sudo -u ${CORTENSOR_USER} cp dist/.env-example ${CORTENSOR_HOME}/.env
+echo "   - Example environment file copied to ${CORTENSOR_HOME}/.env"
 
-echo "8. Setting up log files"
+echo "9. Setting up log files"
 
 # Create log files for the Cortensor daemon and set appropriate permissions
-sudo touch /var/log/cortensord.log
-sudo touch /var/log/cortensord-llm.log
-sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} /var/log/cortensord.log
-sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} /var/log/cortensord-llm.log
-echo "   - Log files /var/log/cortensord.log and /var/log/cortensord-llm.log created with correct permissions"
+sudo mkdir -p ${CORTENSOR_LOGS}
+sudo touch ${CORTENSOR_LOGS}/cortensord.log
+sudo touch ${CORTENSOR_LOGS}/cortensord-llm.log
+sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} ${CORTENSOR_LOGS}/cortensord.log
+sudo chown ${CORTENSOR_USER}:${CORTENSOR_USER} ${CORTENSOR_LOGS}/cortensord-llm.log
+echo "   - Log files created in ${CORTENSOR_LOGS} with correct permissions"
 
-echo "9. Enabling Cortensor daemon service"
+echo "10. Enabling Cortensor daemon service"
 
 # Reload systemd to read new service files and enable Cortensor to start at boot
 sudo systemctl daemon-reload
@@ -74,4 +91,19 @@ sudo systemctl enable cortensor
 echo "   - Systemd reloaded and cortensor service enabled to start at boot"
 
 echo "========================================="
-echo "Cortensor installation process completed successfully!"
+echo "Cortensor installation completed successfully!"
+echo ""
+echo "Recommended Usage:"
+echo "  - To start Cortensor:  sudo systemctl start cortensor"
+echo "  - To stop Cortensor:   sudo systemctl stop cortensor"
+echo ""
+echo "Manual Usage (not recommended):"
+echo "  - To start Cortensor manually:  ${CORTENSOR_BIN}/start-cortensor.sh"
+echo "  - To stop Cortensor manually:   ${CORTENSOR_BIN}/stop-cortensor.sh"
+echo ""
+echo "Logs are available in: ${CORTENSOR_LOGS}/"
+echo "  - /var/log/cortensor/cortensord.log"
+echo ""
+echo "Note: Using systemctl is the recommended approach for managing the Cortensor service."
+echo "      You may need to restart your terminal or update the PATH variable to include:"
+echo "      ${CORTENSOR_BIN}"
