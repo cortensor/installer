@@ -6,6 +6,9 @@ cd "$DIR"
 
 # Define paths
 BINARY_PATH="/usr/local/bin/cortensord"
+START_SCRIPT_PATH="$HOME/.cortensor/bin/start-cortensor.sh"
+STOP_SCRIPT_PATH="$HOME/.cortensor/bin/stop-cortensor.sh"
+
 DIST_BINARY="$DIR/dist/cortensord"
 ENV_PATH="$HOME/.cortensor/.env"
 DIST_ENV="$DIR/dist/.env-example"
@@ -51,6 +54,10 @@ sudo -u deploy mkdir -p ${CORTENSOR_BIN_DIR}
 sudo cp -f "$DIST_BINARY" /usr/local/bin/cortensord
 sudo chmod +x /usr/local/bin/cortensord
 sudo ln -sfn /usr/local/bin/cortensord ${CORTENSOR_BIN_DIR}/cortensord
+
+cp -f "$DIR/utils/start-linux.sh" "$START_SCRIPT_PATH"
+cp -f "$DIR/utils/stop-linux.sh" "$STOP_SCRIPT_PATH"
+
 if [ $? -eq 0 ]; then
     echo "   - Cortensor binary upgraded successfully."
     sudo chmod +x "$BINARY_PATH"
