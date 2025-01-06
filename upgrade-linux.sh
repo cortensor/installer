@@ -11,7 +11,7 @@ ENV_PATH="$HOME/.cortensor/.env"
 DIST_ENV="$DIR/dist/.env-example"
 SYSTEMD_SERVICE_PATH="/etc/systemd/system/cortensor.service"
 DIST_SYSTEMD_SERVICE="$DIR/dist/cortensor.service"
-CORTENSOR_BIN="$HOME/.cortensor/bin"
+CORTENSOR_BIN_DIR="$HOME/.cortensor/bin"
 
 echo "Starting Cortensor upgrade process..."
 echo "========================================="
@@ -45,12 +45,12 @@ fi
 
 # Copy the new binary to the target location
 echo "4. Upgrading Cortensor binary..."
-sudo -u deploy mkdir -p ${CORTENSOR_BIN}
+sudo -u deploy mkdir -p ${CORTENSOR_BIN_DIR}
 #sudo cp -f "$DIST_BINARY" "$BINARY_PATH"
 #sudo chmod +x "$BINARY_PATH"
 sudo cp -f "$DIST_BINARY" /usr/local/bin/cortensord
 sudo chmod +x /usr/local/bin/cortensord
-sudo ln -sfn /usr/local/bin/cortensord ${CORTENSOR_BIN}/cortensord
+sudo ln -sfn /usr/local/bin/cortensord ${CORTENSOR_BIN_DIR}/cortensord
 if [ $? -eq 0 ]; then
     echo "   - Cortensor binary upgraded successfully."
     sudo chmod +x "$BINARY_PATH"
@@ -126,12 +126,12 @@ echo "  - To start Cortensor:  sudo systemctl start cortensor"
 echo "  - To stop Cortensor:   sudo systemctl stop cortensor"
 echo ""
 echo "Manual Usage (not recommended):"
-echo "  - To start Cortensor manually:  ${CORTENSOR_BIN}/start-cortensor.sh"
-echo "  - To stop Cortensor manually:   ${CORTENSOR_BIN}/stop-cortensor.sh"
+echo "  - To start Cortensor manually:  ${CORTENSOR_BIN_DIR}/start-cortensor.sh"
+echo "  - To stop Cortensor manually:   ${CORTENSOR_BIN_DIR}/stop-cortensor.sh"
 echo ""
 echo "Logs are available in: ${CORTENSOR_LOGS}/"
 echo "  - /var/log/cortensor/cortensord.log"
 echo ""
 echo "Note: Using systemctl is the recommended approach for managing the Cortensor service."
 echo "      You may need to restart your terminal or update the PATH variable to include:"
-echo "      ${CORTENSOR_BIN}"
+echo "      ${CORTENSOR_BIN_DIR}"
