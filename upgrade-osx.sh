@@ -5,7 +5,7 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DIR"
 
 # Define paths
-CORTENSOR_BIN="$HOME/bin/cortensord"
+CORTENSOR_BIN="$HOME/.cortensor/bin/cortensord"
 DIST_BINARY="$DIR/dist/cortensord-darwin"
 ENV_PATH="$HOME/.cortensor/.env"
 DIST_ENV="$DIR/dist/.env-example"
@@ -44,6 +44,7 @@ fi
 
 # Copy the new binary to the bin directory
 echo "4. Upgrading Cortensor binary..."
+mkdir -p "$HOME/.cortensor/bin"
 cp -f "$DIST_BINARY" "$CORTENSOR_BIN"
 if [ $? -eq 0 ]; then
     echo "   - Cortensor binary upgraded successfully."
