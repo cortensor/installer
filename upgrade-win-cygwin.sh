@@ -7,6 +7,7 @@ cd "$DIR"
 # Define paths
 CORTENSOR_DIR="$HOME/.cortensor"
 BINARY_PATH="$CORTENSOR_DIR/bin/cortensord.exe"
+
 DIST_BINARY="$DIR/dist/cortensord.exe"
 ENV_PATH="$CORTENSOR_DIR/.env"
 DIST_ENV="$DIR/dist/.env-example"
@@ -107,6 +108,13 @@ if [ -f "$DIR/utils/start-win-cygwin.sh" ] && [ -f "$DIR/utils/stop-win-cygwin.s
 else
     echo "   - Start and stop scripts not found in utils folder. Skipping this step."
 fi
+
+mkdir -p "${CORTENSOR_DIR}/logs"
+echo "   - Created logs directory: ${CORTENSOR_DIR}/logs"
+touch "${CORTENSOR_DIR}/logs/cortensord.log"
+echo "   - Created log file: ${CORTENSOR_DIR}/logs/cortensord.log"
+touch "${CORTENSOR_DIR}/logs/cortensord-llm.log"
+echo "   - Created log file: ${CORTENSOR_DIR}/logs/cortensord-llm.log"
 
 # Restart instructions
 echo "==============================================================="

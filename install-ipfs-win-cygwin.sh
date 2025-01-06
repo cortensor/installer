@@ -7,6 +7,8 @@
 
 # Navigate to the directory where the script resides
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CORTENSOR_DIR="$HOME/.cortensor"
+
 cd $DIR
 
 echo "Starting IPFS installation process..."
@@ -46,3 +48,10 @@ echo "   - IPFS installed successfully"
 
 echo "======================================="
 echo "IPFS installation process completed successfully!"
+
+mkdir -p "${CORTENSOR_DIR}/logs"
+echo "   - Created logs directory: ${CORTENSOR_DIR}/logs"
+touch "${CORTENSOR_DIR}/logs/cortensord.log"
+echo "   - Created log file: ${CORTENSOR_DIR}/logs/cortensord.log"
+touch "${CORTENSOR_DIR}/logs/cortensord-llm.log"
+echo "   - Created log file: ${CORTENSOR_DIR}/logs/cortensord-llm.log"
