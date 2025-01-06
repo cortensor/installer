@@ -10,11 +10,11 @@ cd $HOME/.cortensor
 echo "Stopping Cortensor daemon..."
 
 # Find the process ID (PID) of cortensord and terminate it
-cortensord_pid=$(ps -W | grep cortensord | grep -v grep | awk '{print $1}')
+cortensord_pid=$(ps -W | grep cortensord | grep -v "cortensord.exe" | grep -v grep | awk '{print $1}')
 
 if [[ -n "$cortensord_pid" ]]; then
     echo "Cortensord process found with PID: $cortensord_pid. Terminating..."
-    if kill -15 "$cortensord_pid"; then
+    if kill -9 "$cortensord_pid"; then
         echo "Cortensord stopped successfully."
     else
         echo "Failed to stop Cortensord. You may need to terminate it manually."
@@ -22,4 +22,20 @@ if [[ -n "$cortensord_pid" ]]; then
     fi
 else
     echo "Cortensord is not running or the process could not be found."
+fi
+
+echo "Stopping IPFS..."
+# Find the process ID (PID) of cortensord and terminate it
+ipfs_pid=$(ps -W | grep ipfs | grep -v "ipfs.exe" | grep -v grep | awk '{print $1}')
+
+if [[ -n "$ipfs_pid" ]]; then
+    echo "IPFS process found with PID: $ipfs_pid. Terminating..."
+    if kill -9 "$ipfs_pid"; then
+        echo "IPFS stopped successfully."
+    else
+        echo "Failed to stop IPFS. You may need to terminate it manually."
+        exit 1
+    fi
+else
+    echo "IPFS is not running or the process could not be found."
 fi
