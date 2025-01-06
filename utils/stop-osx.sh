@@ -53,6 +53,15 @@ else
     echo "   - No additional .ape-1.10 processes found."
 fi
 
+IPFS_PIDS=$(ps -ef | grep 'ipfs' | grep -v grep | awk '{print $2}')
+if [ -n "$IPFS_PIDS" ]; then
+    echo "   - Found IPFS process IDs: $IPFS_PIDS. Terminating..."
+    echo "$IPFS_PIDS" | xargs kill -9
+    echo "   - IPFS processes terminated."
+else
+    echo "   - No additional IPFS processes found."
+fi
+
 # Final verification
 if pgrep -f "cortensord|\.ape-1\.10" > /dev/null; then
     echo "Warning: Some processes might still be running. Manual intervention may be required."
