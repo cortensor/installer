@@ -11,6 +11,7 @@ ENV_PATH="$HOME/.cortensor/.env"
 DIST_ENV="$DIR/dist/.env-example"
 SYSTEMD_SERVICE_PATH="/etc/systemd/system/cortensor.service"
 DIST_SYSTEMD_SERVICE="$DIR/dist/cortensor.service"
+CORTENSOR_BIN="$HOME/.cortensor/bin"
 
 echo "Starting Cortensor upgrade process..."
 echo "========================================="
@@ -44,6 +45,7 @@ fi
 
 # Copy the new binary to the target location
 echo "4. Upgrading Cortensor binary..."
+sudo -u deploy mkdir -p ${CORTENSOR_BIN}
 #sudo cp -f "$DIST_BINARY" "$BINARY_PATH"
 #sudo chmod +x "$BINARY_PATH"
 sudo cp -f "$DIST_BINARY" /usr/local/bin/cortensord
