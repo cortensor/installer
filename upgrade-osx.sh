@@ -54,6 +54,8 @@ cp -f "$DIR/utils/stop-osx.sh" "$STOP_SCRIPT_PATH"
 if [ $? -eq 0 ]; then
     echo "   - Cortensor binary upgraded successfully."
     chmod +x "$CORTENSOR_BIN"
+    chmod +x "$START_SCRIPT_PATH"
+    chmod +x "$STOP_SCRIPT_PATH"
 else
     echo "   - Failed to upgrade Cortensor binary. Upgrade aborted."
     exit 1
