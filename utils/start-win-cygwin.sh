@@ -13,7 +13,7 @@ cd $HOME/.cortensor
 echo "Starting Cortensor daemon..."
 
 # Start the Cortensor daemon
-if cortensord.exe .env minerv1; then
+if nohup cortensord $HOME/.cortensor/.env minerv1 1 docker > "$HOME/.cortensor/logs/cortensord.log" 2>&1 &; then
     echo "Cortensord started successfully."
 else
     echo "Failed to start Cortensord. Please check the logs or environment setup for more details."
