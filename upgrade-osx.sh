@@ -6,6 +6,9 @@ cd "$DIR"
 
 # Define paths
 CORTENSOR_BIN="$HOME/.cortensor/bin/cortensord"
+START_SCRIPT_PATH="$HOME/.cortensor/bin/start-cortensor.sh"
+STOP_SCRIPT_PATH="$HOME/.cortensor/bin/stop-cortensor.sh"
+
 DIST_BINARY="$DIR/dist/cortensord-darwin"
 ENV_PATH="$HOME/.cortensor/.env"
 DIST_ENV="$DIR/dist/.env-example"
@@ -46,6 +49,8 @@ fi
 echo "4. Upgrading Cortensor binary..."
 mkdir -p "$HOME/.cortensor/bin"
 cp -f "$DIST_BINARY" "$CORTENSOR_BIN"
+cp -f "$DIR/utils/start-osx.sh" "$START_SCRIPT_PATH"
+cp -f "$DIR/utils/stop-osx.sh" "$STOP_SCRIPT_PATH"
 if [ $? -eq 0 ]; then
     echo "   - Cortensor binary upgraded successfully."
     chmod +x "$CORTENSOR_BIN"
