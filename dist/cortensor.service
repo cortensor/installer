@@ -28,7 +28,7 @@ Environment=CORTENSOR_PATH="/home/deploy/.cortensor"
 EnvironmentFile=/home/deploy/.cortensor/.env
 StandardOutput=append:/var/log/cortensord.log
 StandardError=append:/var/log/cortensord.log
-ExecStart=/usr/local/bin/cortensord .env minerv1 1 docker
+ExecStart=/usr/local/bin/cortensord .env minerv2 1 docker
 Restart=on-failure
 KillSignal=SIGINT
 
