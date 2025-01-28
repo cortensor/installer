@@ -31,3 +31,30 @@ fi
 # Optionally display the updated line for confirmation
 UPDATED_LINE=$(grep "^CONTRACT_ADDRESS_RUNTIME=" "$ENV_FILE")
 echo "Updated line: $UPDATED_LINE"
+
+# Check if the systemd service file exists
+if [[ ! -f "$SERVICE_FILE" ]]; then
+    echo "Error: cortensor.service file not found at $SERVICE_FILE."
+    exit 1
+fi
+
+# Update the ExecStart line in the systemd service file
+sudo sed -i.bak -E "s|^ExecStart=.*|ExecStart=/usr/local/bin/cortensord .env minerv2 1 docker|" "$SERVICE_FILE"
+if [[ $? -eq 0 ]]; then
+    echo "ExecStart line updated successfully in $SERVICE_FILE."
+else
+    echo "Error: Failed to update the ExecStart line in $SERVICE_FILE."
+    exit 1
+fi
+
+# Reload the systemd daemon and restart the service
+echo "Reloading systemd daemon and restarting cortensor service..."
+sudo systemctl daemon-reload
+sudo systemctl restart cortensor.service
+
+if [[ $? -eq 0 ]]; then
+    echo "Cortensor service restarted successfully."
+else
+    echo "Error: Failed to restart cortensor service."
+    exit 1
+fi
