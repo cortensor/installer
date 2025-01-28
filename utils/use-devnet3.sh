@@ -4,6 +4,7 @@
 
 # Define the path to the .env file
 ENV_FILE="$HOME/.cortensor/.env"
+SERVICE_FILE="/etc/systemd/system/cortensor.service"
 
 # New contract address (set this variable)
 NEW_ADDRESS="0x5889b0E1620f133eFB93fab890543569DE846365"
