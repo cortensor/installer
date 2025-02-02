@@ -12,11 +12,11 @@ echo "======================================="
 
 # Define variables
 IPFS_VERSION="v0.29.0"
-IPFS_PACKAGE="kubo_${IPFS_VERSION}_darwin-amd64.tar.gz"
+IPFS_PACKAGE="kubo_${IPFS_VERSION}_darwin-arm64.tar.gz"
 IPFS_URL="https://github.com/ipfs/kubo/releases/download/${IPFS_VERSION}/${IPFS_PACKAGE}"
 INSTALL_DIR="$HOME/.cortensor/bin"
 
-echo "1. Downloading IPFS package - Darwin AMD64"
+echo "1. Downloading IPFS package - Darwin ARM64"
 # Download the IPFS package
 curl -fsSL "$IPFS_URL" -o "$IPFS_PACKAGE"
 if [[ $? -ne 0 ]]; then
