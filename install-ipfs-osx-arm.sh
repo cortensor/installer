@@ -11,7 +11,7 @@ echo "Starting IPFS installation process..."
 echo "======================================="
 
 # Define variables
-IPFS_VERSION="v0.29.0"
+IPFS_VERSION="v0.33.0"
 IPFS_PACKAGE="kubo_${IPFS_VERSION}_darwin-arm64.tar.gz"
 IPFS_URL="https://github.com/ipfs/kubo/releases/download/${IPFS_VERSION}/${IPFS_PACKAGE}"
 INSTALL_DIR="$HOME/.cortensor/bin"

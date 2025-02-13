@@ -13,7 +13,7 @@ echo "======================================="
 
 echo "1. Downloading IPFS package - Linux AMD64"
 # Download the IPFS package
-IPFS_VERSION="v0.29.0"
+IPFS_VERSION="v0.33.0"
 IPFS_PACKAGE="kubo_${IPFS_VERSION}_linux-amd64.tar.gz"
 IPFS_URL="https://github.com/ipfs/kubo/releases/download/${IPFS_VERSION}/${IPFS_PACKAGE}"
 
