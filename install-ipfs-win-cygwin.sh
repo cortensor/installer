@@ -16,7 +16,7 @@ echo "======================================="
 
 echo "1. Downloading IPFS package - Windows AMD64 (Cygwin)"
 # Download the IPFS package
-IPFS_VERSION="v0.29.0"
+IPFS_VERSION="v0.33.0"
 IPFS_PACKAGE="kubo_${IPFS_VERSION}_windows-amd64.zip"
 IPFS_URL="https://github.com/ipfs/kubo/releases/download/${IPFS_VERSION}/${IPFS_PACKAGE}"
 
