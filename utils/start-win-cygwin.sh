@@ -18,7 +18,7 @@ echo "Starting Cortensor daemon..."
 
 # Start the Cortensor daemon
 #if ps -p $PID > /dev/null; then
-if cortensord .env minerv1; then
+if cortensord .env minerv2; then
     echo "Cortensord started successfully."
 else
     echo "Failed to start Cortensord. Please check the logs or environment setup for more details."
