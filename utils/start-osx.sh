@@ -29,7 +29,7 @@ cd $HOME/.cortensor
 
 # Start the cortensord using nohup
 echo "Starting Cortensord..."
-nohup cortensord $HOME/.cortensor/.env minerv1 > "$HOME/.cortensor/logs/cortensord.log" 2>&1 &
+nohup cortensord $HOME/.cortensor/.env minerv2 > "$HOME/.cortensor/logs/cortensord.log" 2>&1 &
 
 # Get the PID of the new process
 PID=$!
