@@ -25,11 +25,22 @@ fi
 mkdir -p "$HOME/.cortensor/logs"
 
 # Navigate to the .cortensor directory
-cd $HOME/.cortensor
+cd "$HOME/.cortensor"
 
-# Start the cortensord using nohup
-echo "Starting Cortensord..."
-nohup cortensord $HOME/.cortensor/.env minerv2 1 docker > "$HOME/.cortensor/logs/cortensord.log" 2>&1 &
+# Check if GPU mode is enabled
+GPU_MODE=$(grep "^LLM_OPTION_GPU=" "$HOME/.cortensor/.env" | cut -d '=' -f2)
+
+# Set the appropriate command based on GPU mode
+if [[ "$GPU_MODE" == "1" ]]; then
+    echo "GPU mode enabled. Starting Cortensor without '1 docker' argument."
+    CMD="nohup cortensord $HOME/.cortensor/.env minerv2 > \"$HOME/.cortensor/logs/cortensord.log\" 2>&1 &"
+else
+    echo "GPU mode disabled. Starting Cortensor with '1 docker' argument."
+    CMD="nohup cortensord $HOME/.cortensor/.env minerv2 1 docker > \"$HOME/.cortensor/logs/cortensord.log\" 2>&1 &"
+fi
+
+# Run the determined command
+eval "$CMD"
 
 # Get the PID of the new process
 PID=$!
