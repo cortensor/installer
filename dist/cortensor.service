@@ -32,5 +32,8 @@ ExecStart=/usr/local/bin/cortensord .env minerv2 1 docker
 Restart=on-failure
 KillSignal=SIGINT
 
+# Restart cortensord periodically
+# RuntimeMaxSec=43200
+
 [Install]
 WantedBy=default.target
