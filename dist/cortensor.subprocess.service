@@ -11,7 +11,7 @@ After=network.target
 # Environment=CORTENSOR_PATH=/custom/cortensor/path
 
 # Specify a higher limit for open files/connections if necessary
-# LimitNOFILE=1000000
+LimitNOFILE=1000000
 
 # Don't use swap
 MemorySwapMax=0
@@ -28,9 +28,12 @@ Environment=CORTENSOR_PATH="/home/deploy/.cortensor"
 EnvironmentFile=/home/deploy/.cortensor/.env
 StandardOutput=append:/var/log/cortensord.log
 StandardError=append:/var/log/cortensord.log
-ExecStart=/usr/local/bin/cortensord .env minerv1
+ExecStart=/usr/local/bin/cortensord .env minerv2
 Restart=on-failure
 KillSignal=SIGINT
+
+# Restart cortensord periodically
+# RuntimeMaxSec=43200
 
 [Install]
 WantedBy=default.target
