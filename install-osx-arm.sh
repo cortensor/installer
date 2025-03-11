@@ -15,7 +15,7 @@ mkdir -p ~/.cortensor/bin/llm-files
 
 echo "2. Deploying the Cortensor daemon executable"
 # Copy the darwin (macOS) specific Cortensor daemon executable
-cp dist/cortensord-darwin-amd64 ~/.cortensor/bin/cortensord
+cp dist/cortensord-darwin ~/.cortensor/bin/cortensord
 chmod +x ~/.cortensor/bin/cortensord
 echo "   - Cortensor daemon copied to ~/.cortensor/bin and made executable"
 
