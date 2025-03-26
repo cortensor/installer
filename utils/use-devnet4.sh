@@ -7,7 +7,7 @@ ENV_FILE="$HOME/.cortensor/.env"
 SERVICE_FILE="/etc/systemd/system/cortensor.service"
 
 # New contract address (set this variable)
-NEW_ADDRESS="0x33eE6314eD4Fbd79e95d57DB62fc455CB052E0B2"
+NEW_ADDRESS="0x7bDF2244a3Cc65335176d7e546Cc99B9316a912a"
 
 # Check if the .env file exists
 if [[ ! -f "$ENV_FILE" ]]; then
@@ -39,23 +39,26 @@ if [[ ! -f "$SERVICE_FILE" ]]; then
     exit 1
 fi
 
-# Update the ExecStart line in the systemd service file
-sudo sed -i.bak -E "s|^ExecStart=.*|ExecStart=/usr/local/bin/cortensord .env minerv2 1 docker|" "$SERVICE_FILE"
-if [[ $? -eq 0 ]]; then
-    echo "ExecStart line updated successfully in $SERVICE_FILE."
-else
-    echo "Error: Failed to update the ExecStart line in $SERVICE_FILE."
-    exit 1
-fi
+if [[ "$(uname)" == "Linux" ]]; then
+    # Update the ExecStart line in the systemd service file
+    sudo sed -i.bak -E "s|^ExecStart=.*|ExecStart=/usr/local/bin/cortensord .env minerv2 1 docker|" "$SERVICE_FILE"
+    if [[ $? -eq 0 ]]; then
+        echo "ExecStart line updated successfully in $SERVICE_FILE."
+    else
+        echo "Error: Failed to update the ExecStart line in $SERVICE_FILE."
+        exit 1
+    fi
 
-# Reload the systemd daemon and restart the service
-echo "Reloading systemd daemon and restarting cortensor service..."
-sudo systemctl daemon-reload
-sudo systemctl restart cortensor.service
-
-if [[ $? -eq 0 ]]; then
-    echo "Cortensor service restarted successfully."
+    # Reload the systemd daemon and restart the service if the OS is Linux
+    echo "Detected Linux OS. Reloading systemd daemon and restarting cortensor service."
+    sudo systemctl daemon-reload
+    sudo systemctl restart cortensor.service
+    if [[ $? -eq 0 ]]; then
+        echo "cortensor service restarted successfully."
+    else
+        echo "Error: Failed to restart cortensor service."
+        exit 1
+    fi
 else
-    echo "Error: Failed to restart cortensor service."
-    exit 1
+    echo "Non-Linux OS detected. Please restart the cortensor service manually if needed."
 fi
