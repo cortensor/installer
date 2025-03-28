@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo Installing Cygwin components...
+echo Installing Cortensor...
 
 :: Set path to Git Bash
 set "BASH_PATH=C:\Program Files\Git\bin\bash.exe"
