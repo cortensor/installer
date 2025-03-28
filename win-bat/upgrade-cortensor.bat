@@ -26,7 +26,7 @@ set "UNIX_PATH=%SCRIPT_DIR:\=/%"
 echo Running Cortensor upgrade script from: %SCRIPT_DIR%
 
 :: Run the upgrade-win-cygwin.sh script from the same directory
-"%BASH_PATH%" -c "cd \"%UNIX_PATH%\" && ./upgrade-win-cygwin.sh"
+"%BASH_PATH%" -c "cd \"%UNIX_PATH%\" && ../upgrade-win-cygwin.sh"
 
 :: Check if the script executed successfully
 if %ERRORLEVEL% neq 0 (
