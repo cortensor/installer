@@ -23,17 +23,17 @@ if "%SCRIPT_DIR:~-1%" == "\" set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
 :: Convert Windows path to Unix-style path for bash
 set "UNIX_PATH=%SCRIPT_DIR:\=/%"
 
-echo Running install IPFS script from: %SCRIPT_DIR%
+echo Running register script from: %SCRIPT_DIR%
 
-:: Run the install-win-cygwin.sh script from the same directory
-"%BASH_PATH%" -c "cd \"%UNIX_PATH%\" && ../install-ipfs-win-cygwin.sh"
+:: Run the register.sh script from the same directory
+"%BASH_PATH%" -c "cd \"%UNIX_PATH%\" && ../utils/register.sh"
 
 :: Check if the script executed successfully
 if %ERRORLEVEL% neq 0 (
-    echo Error: Installation failed with error code %ERRORLEVEL%
+    echo Error: Registration failed with error code %ERRORLEVEL%
     echo Please check the output above for more details.
 ) else (
-    echo Installation completed successfully.
+    echo Registration completed successfully.
 )
 
 pause
