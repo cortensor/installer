@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-echo Installing IPFS...
+echo Installing Cortensor...
 
 :: Set path to Git Bash
 set "BASH_PATH=C:\Program Files\Git\bin\bash.exe"
@@ -26,7 +26,7 @@ set "UNIX_PATH=%SCRIPT_DIR:\=/%"
 echo Running install script from: %SCRIPT_DIR%
 
 :: Run the install-win-cygwin.sh script from the same directory
-"%BASH_PATH%" -c "cd \"%UNIX_PATH%\" && ./install-ipfs-win-cygwin.sh"
+"%BASH_PATH%" -c "cd \"%UNIX_PATH%\" && ../install-win-cygwin.sh"
 
 :: Check if the script executed successfully
 if %ERRORLEVEL% neq 0 (
