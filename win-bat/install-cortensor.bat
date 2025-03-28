@@ -23,7 +23,7 @@ if "%SCRIPT_DIR:~-1%" == "\" set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
 :: Convert Windows path to Unix-style path for bash
 set "UNIX_PATH=%SCRIPT_DIR:\=/%"
 
-echo Running Cortensorinstall script from: %SCRIPT_DIR%
+echo Running Cortensor install script from: %SCRIPT_DIR%
 
 :: Run the install-win-cygwin.sh script from the same directory
 "%BASH_PATH%" -c "cd \"%UNIX_PATH%\" && ../install-win-cygwin.sh"
