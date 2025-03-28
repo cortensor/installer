@@ -30,10 +30,18 @@ if not exist "%INSTALLER%" (
     exit /b 1
 )
 
-echo Download completed. Running installer...
+echo Download completed.
 
-:: Run the installer with silent options
-"%INSTALLER%" /VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS
+:: Prompt for user confirmation
+set /p CONFIRM="Press Y to install Git now or any other key to cancel: "
+if /i "%CONFIRM%" == "Y" (
+    echo Running installer...
+    :: Run the installer with silent options and wait for completion
+    start /wait "" "%INSTALLER%" /VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS
+) else (
+    echo Installation canceled by user.
+    exit /b 0
+)
 
 :: Check installation result
 if %ERRORLEVEL% neq 0 (
