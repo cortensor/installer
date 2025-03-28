@@ -116,6 +116,19 @@ echo "   - Created log file: ${CORTENSOR_DIR}/logs/cortensord.log"
 touch "${CORTENSOR_DIR}/logs/cortensord-llm.log"
 echo "   - Created log file: ${CORTENSOR_DIR}/logs/cortensord-llm.log"
 
+# Copy the Windows batch file to the user's desktop
+if [[ -f "./utils/start-cortensor.bat" ]]; then
+    echo "Copying start-cortensor.bat to Desktop..."
+    if [[ -d "$HOME/Desktop" ]]; then
+        cp ./utils/start-cortensor.bat "$HOME/Desktop/"
+        echo "Copied start-cortensor.bat to Desktop successfully."
+    else
+        echo "Warning: Desktop directory not found at $HOME/Desktop. Skipping copy."
+    fi
+else
+    echo "Warning: start-cortensor.bat not found in ./utils/. Skipping copy."
+fi
+
 # Restart instructions
 echo "==============================================================="
 echo "Cortensor upgrade process for Cygwin completed successfully!"
