@@ -9,6 +9,7 @@ After=network.target
 
 # Set a custom path for Cortensor configuration and data (if needed)
 # Environment=CORTENSOR_PATH=/custom/cortensor/path
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/deploy/.cortensor/bin
 
 # Specify a higher limit for open files/connections if necessary
 LimitNOFILE=1000000
