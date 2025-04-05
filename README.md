@@ -1,9 +1,11 @@
-   ______           __
-  / ____/___  _____/ /____  ____  _________  _____
- / /   / __ \/ ___/ __/ _ \/ __ \/ ___/ __ \/ ___/
-/ /___/ /_/ / /  / /_/  __/ / / (__  ) /_/ / /
-\____/\____/_/   \__/\___/_/ /_/____/\____/_/
+```
+  __         __   __       ______           __
+ / /       _/_/   \ \     / ____/___  _____/ /____  ____  _________  _____
+/ /      _/_/      \ \   / /   / __ \/ ___/ __/ _ \/ __ \/ ___/ __ \/ ___/
+\ \    _/_/        / /  / /___/ /_/ / /  / /_/  __/ / / (__  ) /_/ / /
+ \_\  /_/         /_/   \____/\____/_/   \__/\___/_/ /_/____/\____/_/
 
+```
 # Cortensor Network Software - Early Alpha Release
 
 **Version:** 0.0.0.1-alpha
@@ -43,8 +45,8 @@ This installer and the accompanying software components are currently designed t
 
 ### COPYRIGHT NOTICE
 
-© 2024 Cortensor Network. All rights reserved.  
-© 2024 Eliza Labs Inc. All rights reserved.
+© 2024-2025 Cortensor Network. All rights reserved.  
+© 2024-2025 Eliza Labs Inc. All rights reserved.
 
 Redistribution or commercial use of this software is prohibited without permission. Refer to `LICENSE.md` for full legal terms.
 
