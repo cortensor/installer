@@ -8,8 +8,58 @@
 # All requests are proxied to the local API server running on port 5010.
 # SSL/TLS is managed by Certbot for secure HTTPS connections.
 #
-# Version: 0.0.1
-# Last updated: May 30, 2025
+# Version: 0.0.2
+# Last updated: May 31, 2025
+#
+# CORS Configuration:
+# This configuration includes Cross-Origin Resource Sharing (CORS) settings to control which domains
+# can access the API. There are two approaches implemented:
+#
+# 1. Permissive CORS: Allows requests from any origin (use with caution in production)
+#    - add_header 'Access-Control-Allow-Origin' '*';
+#
+# 2. Restricted CORS: Only allows specific origins
+#    - add_header 'Access-Control-Allow-Origin' 'https://example.com';
+#    - For multiple domains, use a variable approach as shown in the configuration
+#
+# Each endpoint includes both examples (permissive commented out by default)
+# Uncomment the approach you prefer and restart nginx
+
+# Define allowed origins for CORS (used with restricted CORS approach)
+map $http_origin $cors_allowed_origin {
+    default "";
+    "https://app1.cortensor.network" "$http_origin";
+    "https://app2.cortensor.network" "$http_origin";
+    "https://app3.cortensor.network" "$http_origin";
+    # Add more allowed domains as needed
+}
+
+# CORS configuration snippet for reuse
+# Include this in each location block that needs CORS support
+# Example usage: include /etc/nginx/cors_config.conf;
+# Save this section to /etc/nginx/cors_config.conf
+#
+# --- START CORS CONFIG SNIPPET ---
+# if ($request_method = 'OPTIONS') {
+#     add_header 'Access-Control-Allow-Origin' $cors_allowed_origin;
+#     add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+#     add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key';
+#     add_header 'Access-Control-Max-Age' 1728000;
+#     add_header 'Content-Type' 'text/plain charset=UTF-8';
+#     add_header 'Content-Length' 0;
+#     return 204;
+# }
+# 
+# # Restricted CORS (specific origins)
+# add_header 'Access-Control-Allow-Origin' $cors_allowed_origin always;
+# add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+# add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key' always;
+# 
+# # Permissive CORS (all origins - uncomment if needed, comment out the restricted CORS section above)
+# # add_header 'Access-Control-Allow-Origin' '*' always;
+# # add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+# # add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key' always;
+# --- END CORS CONFIG SNIPPET ---
 
 server {
     server_name router-dev-0.cortensor.network;
@@ -21,6 +71,26 @@ server {
     
     # Allow specific endpoints
     location /api/v1/completions {
+        # CORS configuration
+        if ($request_method = 'OPTIONS') {
+            # Preflight request handling
+            add_header 'Access-Control-Allow-Origin' $cors_allowed_origin;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key';
+            add_header 'Access-Control-Max-Age' 1728000; # 20 days
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+        
+        # Permissive CORS (all origins - uncomment if needed)
+        # add_header 'Access-Control-Allow-Origin' '*' always;
+        
+        # Restricted CORS (specific origins)
+        add_header 'Access-Control-Allow-Origin' $cors_allowed_origin always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key' always;
+        
         proxy_pass http://127.0.0.1:5010;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -39,6 +109,23 @@ server {
     
     # Add more allowed endpoints as needed
     location /api/v1/status {
+        # CORS configuration
+        if ($request_method = 'OPTIONS') {
+            # Preflight request handling
+            add_header 'Access-Control-Allow-Origin' $cors_allowed_origin;
+            add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key';
+            add_header 'Access-Control-Max-Age' 1728000; # 20 days
+            add_header 'Content-Type' 'text/plain charset=UTF-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+        
+        # Restricted CORS (specific origins)
+        add_header 'Access-Control-Allow-Origin' $cors_allowed_origin always;
+        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key' always;
+        
         proxy_pass http://127.0.0.1:5010;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
