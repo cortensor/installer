@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Cortensor Node macOS Upgrade Script
+# This script upgrades Cortensor node components on macOS systems.
+# Copyright (c) 2024-2025 Cortensor Network. All rights reserved.
+# Copyright (c) 2024-2025 Eliza Labs Inc. All rights reserved.
+#
+# Version: 0.0.1
+# Last updated: May 31, 2025
+
 # Navigate to the directory where the script resides
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$DIR"
