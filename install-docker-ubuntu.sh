@@ -1,6 +1,13 @@
 #!/bin/bash
 
-# This script installs Docker on Ubuntu systems.
+# Cortensor Docker Ubuntu Installer
+# This script installs Docker on Ubuntu systems for Cortensor nodes.
+# Copyright (c) 2024-2025 Cortensor Network. All rights reserved.
+# Copyright (c) 2024-2025 Eliza Labs Inc. All rights reserved.
+#
+# Version: 0.0.1
+# Last updated: May 31, 2025
+#
 # https://docs.docker.com/engine/install/ubuntu/
 
 # Navigate to the directory where the script resides
