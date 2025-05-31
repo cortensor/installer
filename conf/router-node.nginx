@@ -1,0 +1,103 @@
+# Cortensor Router Node Nginx Configuration
+# Copyright (c) 2024-2025 Cortensor Network. All rights reserved.
+# Copyright (c) 2024-2025 Eliza Labs Inc. All rights reserved.
+#
+# This file configures the nginx web server for the router node API endpoints.
+# It provides secure access to specific API endpoints while blocking all other requests.
+# Only explicitly defined API endpoints (/api/v1/*) are accessible from the outside.
+# All requests are proxied to the local API server running on port 5010.
+# SSL/TLS is managed by Certbot for secure HTTPS connections.
+#
+# Version: 0.0.1
+# Last updated: May 30, 2025
+
+server {
+    server_name router-dev-0.cortensor.network;
+    
+    # Block all requests by default
+    location / {
+        return 404;
+    }
+    
+    # Allow specific endpoints
+    location /api/v1/completions {
+        proxy_pass http://127.0.0.1:5010;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        # Streaming optimization settings
+        proxy_buffering off;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
+        tcp_nodelay on;
+        tcp_nopush off;
+        proxy_buffer_size 4k;
+        proxy_read_timeout 300s;
+    }
+    
+    # Add more allowed endpoints as needed
+    location /api/v1/status {
+        proxy_pass http://127.0.0.1:5010;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    location /api/v1/miners {
+        proxy_pass http://127.0.0.1:5010;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    location /api/v1/sessions {
+        proxy_pass http://127.0.0.1:5010;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    location /api/v1/info {
+        proxy_pass http://127.0.0.1:5010;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    location /api/v1/tasks {
+        proxy_pass http://127.0.0.1:5010;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    location /api/v1/ping {
+        proxy_pass http://127.0.0.1:5010;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/router-dev-0.cortensor.network/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/router-dev-0.cortensor.network/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+server {
+    if ($host = router-dev-0.cortensor.network) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+    listen 80;
+    server_name router-dev-0.cortensor.network;
+    return 404; # managed by Certbot
+}
