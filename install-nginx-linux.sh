@@ -56,34 +56,54 @@ echo "2. Configuring Nginx for Router Node"
 mkdir -p /etc/nginx/sites-available
 mkdir -p /etc/nginx/sites-enabled
 
-# Copy the router-node.nginx configuration file
-cp "$DIR/conf/router-node.nginx" /etc/nginx/sites-available/router-node.conf
-if [[ $? -ne 0 ]]; then
-    echo "   - Error: Failed to copy router-node configuration"
+# Prompt for domain name
+echo "   - Please enter your router node domain name (e.g., router.example.com):"
+read -p "     Domain: " ROUTER_DOMAIN
+
+# Use a default domain if none provided
+if [[ -z "$ROUTER_DOMAIN" ]]; then
+    ROUTER_DOMAIN="router.cortensor.network"
+    echo "   - No domain provided, using default: $ROUTER_DOMAIN"
+fi
+
+# Use the template file and replace the domain placeholder
+if [ ! -f "$DIR/conf/router-node.nginx.template" ]; then
+    echo "   - Error: Template file not found at $DIR/conf/router-node.nginx.template"
     exit 1
 fi
+
+# Create the configuration file from the template with the domain replaced
+cat "$DIR/conf/router-node.nginx.template" | sed "s/ROUTER_DOMAIN_PLACEHOLDER/$ROUTER_DOMAIN/g" > /etc/nginx/sites-available/router-node.conf
+if [[ $? -ne 0 ]]; then
+    echo "   - Error: Failed to create router-node configuration from template"
+    exit 1
+fi
+
+echo "   - Router domain set to: $ROUTER_DOMAIN"
+echo "   - Router Node Nginx configuration created from template"
 
 # Create a symbolic link to enable the site
 ln -sf /etc/nginx/sites-available/router-node.conf /etc/nginx/sites-enabled/
 
+# Comment out for now since it is already contained on router-node.nginx
 # Create CORS config snippet for reuse
-cat > /etc/nginx/cors_config.conf << 'EOF'
+#cat > /etc/nginx/cors_config.conf << 'EOF'
 # CORS configuration for Cortensor Router Node
-if ($request_method = 'OPTIONS') {
-    add_header 'Access-Control-Allow-Origin' $cors_allowed_origin;
-    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
-    add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key';
-    add_header 'Access-Control-Max-Age' 1728000;
-    add_header 'Content-Type' 'text/plain charset=UTF-8';
-    add_header 'Content-Length' 0;
-    return 204;
-}
+#if ($request_method = 'OPTIONS') {
+#    add_header 'Access-Control-Allow-Origin' $cors_allowed_origin;
+#    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+#    add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key';
+#    add_header 'Access-Control-Max-Age' 1728000;
+#    add_header 'Content-Type' 'text/plain charset=UTF-8';
+#    add_header 'Content-Length' 0;
+#    return 204;
+#}
 
 # Restricted CORS (specific origins)
-add_header 'Access-Control-Allow-Origin' $cors_allowed_origin always;
-add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
-add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key' always;
-EOF
+#add_header 'Access-Control-Allow-Origin' $cors_allowed_origin always;
+#add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+#add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type, X-API-Key' always;
+#EOF
 
 echo "   - Router Node Nginx configuration installed"
 
@@ -106,22 +126,19 @@ echo "   - Nginx service restarted successfully"
 
 echo "5. Setting up SSL with Certbot"
 echo "   - Note: You will need to configure your domain DNS before running this step"
-echo "   - To set up SSL later, run: sudo certbot --nginx -d your-domain.com"
+echo "   - To set up SSL later, run: sudo certbot --nginx -d $ROUTER_DOMAIN"
 
 # Ask if the user wants to set up SSL now
-read -p "Do you want to set up SSL now? (y/n): " setup_ssl
+read -p "Do you want to set up SSL now for domain '$ROUTER_DOMAIN'? (y/n): " setup_ssl
 if [[ "$setup_ssl" == "y" || "$setup_ssl" == "Y" ]]; then
-    read -p "Enter your domain name (e.g., router-dev-0.cortensor.network): " domain_name
-    if [[ -z "$domain_name" ]]; then
-        echo "   - No domain provided, skipping SSL setup"
+    # Use the domain we already collected
+    echo "   - Setting up SSL for domain: $ROUTER_DOMAIN"
+    certbot --nginx -d "$ROUTER_DOMAIN"
+    if [[ $? -ne 0 ]]; then
+        echo "   - Error: SSL setup failed"
+        echo "   - You can try again later with: sudo certbot --nginx -d $ROUTER_DOMAIN"
     else
-        certbot --nginx -d "$domain_name"
-        if [[ $? -ne 0 ]]; then
-            echo "   - Error: SSL setup failed"
-            echo "   - You can try again later with: sudo certbot --nginx -d $domain_name"
-        else
-            echo "   - SSL setup completed successfully"
-        fi
+        echo "   - SSL setup completed successfully for $ROUTER_DOMAIN"
     fi
 else
     echo "   - SSL setup skipped"
