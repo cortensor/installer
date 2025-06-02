@@ -1,6 +1,13 @@
 #!/bin/bash
 
-# This script installs IPFS for macOS.
+# Cortensor IPFS macOS Installer
+# This script installs IPFS for Cortensor nodes on macOS systems.
+# Copyright (c) 2024-2025 Cortensor Network. All rights reserved.
+# Copyright (c) 2024-2025 Eliza Labs Inc. All rights reserved.
+#
+# Version: 0.0.1
+# Last updated: May 31, 2025
+#
 # https://github.com/ipfs/kubo/releases/download/v0.29.0/kubo_v0.29.0_darwin-amd64.tar.gz
 
 # Navigate to the directory where the script resides
