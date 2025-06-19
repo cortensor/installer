@@ -45,5 +45,17 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
 echo "   - Docker components installed successfully"
 
+echo "4. Creating Docker group"
+# Create the Docker group
+sudo groupadd docker
+
+echo "5. Adding user to Docker group"
+# Add the current user to the Docker group
+sudo usermod -aG docker $USER
+
+echo "6. Reloading groups"
+# Reload the groups to apply the changes
+newgrp docker
+
 echo "==================================================="
 echo "Docker installation process completed successfully!"
