@@ -46,7 +46,6 @@ This installer and the accompanying software components are currently designed t
 ### COPYRIGHT NOTICE
 
 © 2024-2025 Cortensor Network. All rights reserved.  
-© 2024-2025 Eliza Labs Inc. All rights reserved.
 
 Redistribution or commercial use of this software is prohibited without permission. Refer to `LICENSE.md` for full legal terms.
 
