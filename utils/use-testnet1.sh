@@ -7,7 +7,7 @@ ENV_FILE="$HOME/.cortensor/.env"
 SERVICE_FILE="/etc/systemd/system/cortensor.service"
 
 # New contract address (set this variable)
-NEW_ADDRESS="0x0188C7F0c23c8be756F7b56486193E086f48E64b"
+NEW_ADDRESS="0xa438cE917a5740267e0f7217f81cbbAA23E7e106"
 
 # Check if the .env file exists
 if [[ ! -f "$ENV_FILE" ]]; then
